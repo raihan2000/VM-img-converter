@@ -1,0 +1,112 @@
+#!/bin/sh
+
+dir=qcow2
+fileName=$(echo $1 | rev | awk -v FS='/' '{print $1}' | rev)
+file=$(echo $fileName | awk -F '.' '{print $1}')
+extension=$(echo $fileName | awk -F '.' '{print $2}')
+dirName=$(echo $1 | rev | cut -f2- -d '/' | rev)
+
+function path_vmdk_Convert
+{
+  echo "Starting............"
+  mkdir ~/.$dir
+  echo "Converting $fileName"
+  qemu-img convert -p -O $dir $dirName/$fileName ~/.$dir/$file.$dir
+  echo "Moving.............."
+  mv ~/.$dir/*.$dir $dirName/
+  echo "Deleting............"
+  rm -r ~/.$dir
+}
+
+function path_vdi_Convert
+{
+  echo "Starting............"
+  mkdir ~/.$dir
+  echo "Converting $fileName"
+  qemu-img convert -p -f $extension -O $dir $dirName/$fileName ~/.$dir/$file.$dir
+  echo "Moving.............."
+  mv ~/.$dir/*.$dir $dirName/
+  echo "Deleting............"
+  rm -r ~/.$dir
+}
+
+function path_ova_Convert
+{
+  echo "Starting............"
+  mkdir ~/.$dir
+  echo "Extracting.........."
+  tar -xf $dirName/$fileName -C ~/.$dir/
+  echo "Converting $fileName"
+  qemu-img convert -p -O $dir ~/.$dir/*.vmdk ~/.$dir/$file.$dir
+  echo "Moving.............."
+  mv ~/.$dir/*.$dir $dirName/
+  echo "Deleting............"
+  rm -r ~/.$dir
+}
+
+function vmdk_Convert
+{
+  echo "Starting............"
+  mkdir ~/.$dir
+  echo "Converting $fileName"
+  qemu-img convert -O $dir $(pwd)/$fileName ~/.$dir/$file.$dir
+  echo "Moving.............."
+  mv ~/.$dir/*.$dir $(pwd)/
+  echo "Deleting............"
+  rm -r ~/.$dir
+}
+
+function vdi_Convert
+{
+  echo "Starting............"
+  mkdir ~/.$dir
+  echo "Converting $fileName"
+  qemu-img convert -p -f $extension -O $dir $(pwd)/$fileName ~/.$dir/$file.$dir
+  echo "Moving.............."
+  mv ~/.$dir/*.$dir $(pwd)/
+  echo "Deleting............"
+  rm -r ~/.$dir
+}
+
+function ova_Convert
+{
+  echo "Starting............"
+  mkdir ~/.$dir
+  echo "Extracting.........."
+  tar -xf $(pwd)/$fileName -C ~/.$dir
+  echo "Converting.........."
+  qemu-img convert -p -O $dir ~/.$dir/*.vmdk ~/.$dir/$file.$dir
+  echo "Moving.............."
+  mv ~/.$dir/*.$dir $(pwd)/
+  echo "Deleting............"
+  rm -r ~/.$dir
+}
+
+#checking extensions to convert
+if [ "${fileName: -5}" == ".vmdk" ];
+then
+  if [[ $(awk 'END{ var=FILENAME; split (var,a,/\//); print a[5]}' "$1") ]];
+  then
+    path_vmdk_Convert
+  else
+    vmdk_Convert
+  fi
+elif [ "${fileName: -4}" == ".vdi" ]
+then
+  if [[ $(awk 'END{ var=FILENAME; split (var,a,/\//); print a[5]}' "$1") ]];
+  then
+    path_vdi_Convert
+  else
+    vdi_Convert
+  fi
+elif [ "${fileName: -4}" == ".ova" ]
+then
+  if [[ $(awk 'END{ var=FILENAME; split (var,a,/\//); print a[5]}' "$1") ]];
+  then
+    path_ova_Convert
+  else
+    ova_Convert
+  fi
+else
+  echo "Give valid file to convert"
+fi
