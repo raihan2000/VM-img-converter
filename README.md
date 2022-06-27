@@ -29,4 +29,4 @@
 ## Extra
 
 - Install pv on linux it will give visualization to conversion process
-  Hope this script will helpfull if you have any query let me know in the issue
+- Hope this script will helpfull if you have any query let me know in the issue
