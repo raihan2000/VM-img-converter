@@ -8,6 +8,7 @@
 - This script will work only if your given Directory or
   File Name without empty spaces so make sure your Directory and Image File does not contains
   any spaces
+- This script will take only One image to convert dont use multiple image
 
 ## Supported Extensions
 - 01 : vdi
