@@ -35,7 +35,7 @@ function path_ova_Convert
   echo "Starting............"
   mkdir ~/.$dir
   echo "Extracting.........."
-  tar -xf $dirName/$fileName -C ~/.$dir/
+  pv $dirName/$fileName | tar -x -C ~/.$dir/
   echo "Converting $fileName"
   qemu-img convert -p -O $dir ~/.$dir/*.vmdk ~/.$dir/$file.$dir
   echo "Moving.............."
@@ -73,8 +73,8 @@ function ova_Convert
   echo "Starting............"
   mkdir ~/.$dir
   echo "Extracting.........."
-  tar -xf $(pwd)/$fileName -C ~/.$dir
-  echo "Converting.........."
+  pv $(pwd)/$fileName | tar -x -C ~/.$dir
+  echo "Converting $fileName"
   qemu-img convert -p -O $dir ~/.$dir/*.vmdk ~/.$dir/$file.$dir
   echo "Moving.............."
   mv ~/.$dir/*.$dir $(pwd)/
