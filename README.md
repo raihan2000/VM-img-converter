@@ -6,7 +6,7 @@
   I'm using Qemu or Gnome Boxes to create virtual machines
 - I am noob pentester who is a Linux Enthusiast
 - This script will work only if your given Directory or
-  File Name without empty spaces so make sure your Directory and File Name does not contains
+  File Name without empty spaces so make sure your Directory and Image File does not contains
   any spaces
 
 ## Supported Extensions
@@ -16,8 +16,8 @@
 
 ## Usage
 
-	./vmImg-to-qemu [~/Full/Path/to/The/Image.ext] or [Only-File-Name.ext]
-	sh /full/path/to/the/vmImg-to-qemu [~/Full/Path/to/The/Image.ext] or [Only-File-Name.ext]
+	./vmImg-to-qemu [~/Full/Path/to/The/Image.ext] or [Only-Image-File-Name.ext]
+	sh /full/path/to/the/vmImg-to-qemu [~/Full/Path/to/The/Image.ext] or [Only-Image-File-Name.ext]
 
 ## Installation
 
