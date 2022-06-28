@@ -2,7 +2,7 @@
 
 ## Description
 
-- I have written this script to easily convert vdi,vda,ova to Qcow2 cuz
+- I have written this script to easily convert vmdk,vdi,ova to Qcow2 cuz
   I'm using Qemu or Gnome Boxes to create virtual machines
 - I am noob pentester who is a Linux Enthusiast
 - This script will work only if your given Directory or
@@ -11,8 +11,8 @@
 - This script will take only One image to convert dont use multiple image
 
 ## Supported Extensions
-- 01 : vdi
-- 02 : vda
+- 01 : vmdk
+- 02 : vdi
 - 03 : ova
 
 ## Usage
